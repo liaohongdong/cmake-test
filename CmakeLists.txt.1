@@ -1,0 +1,53 @@
+# cmake 版本不低于 3.22
+cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
+
+# 设置全局变量
+set_property(GLOBAL PROPERTY project_name "test")
+get_property(name GLOBAL PROPERTY project_name)
+# MESSAGE(STATUS "project_name: ${name}")
+
+# 项目名称及语言
+project(${name} LANGUAGES CXX)
+
+# 是否使用库
+set(USE_LIBRARY ON)
+# message(STATUS "Compile sources into a library? ${USE_LIBRARY}")
+
+# 是否使用动态库
+set(BUILD_SHARED_LIBS ON)
+
+list(APPEND _sources
+    Message.hpp
+    Message.cpp
+    Calculate.hpp
+    Calculate.cpp
+)
+
+include(CMakeDependentOption)
+cmake_dependent_option(
+    MAKE_STATIC_LIBRARY "编译源码为静态库" ON "USE_LIBRARY" OFF
+)
+cmake_dependent_option(
+    MAKE_SHARED_LIBRARY "编译源码为动态库" ON "BUILD_SHARED_LIBS" OFF
+)
+#message(STATUS "Compile sources into a STATIC library? ${MAKE_STATIC_LIBRARY}")
+#message(STATUS "Compile sources into a SHARED library? ${MAKE_SHARED_LIBRARY}")
+if (MAKE_STATIC_LIBRARY)
+    # 从源代码生成对象库
+    #1 add_library(message-objs OBJECT ${_sources})
+
+    if (MAKE_SHARED_LIBRARY)
+        #1 add_library(message-shared SHARED $<TARGET_OBJECTS:message-objs>)
+        add_library(self_library SHARED ${_sources})
+        #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
+    else()
+        #1 add_library(message-shared ${_sources})
+        add_library(self_library STATIC ${_sources})
+        #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
+    endif()
+
+    add_executable(main main.cpp)
+    target_link_libraries(main self_library)
+else()
+    add_executable(main main.cpp ${_sources})
+endif()

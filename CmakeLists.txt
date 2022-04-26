@@ -1,0 +1,108 @@
+# cmake 版本不低于 3.22
+cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
+
+# 设置全局变量
+set_property(GLOBAL PROPERTY project_name "test")
+get_property(name GLOBAL PROPERTY project_name)
+# MESSAGE(STATUS "project_name: ${name}")
+
+# 项目名称及语言
+project(${name} LANGUAGES CXX)
+
+# 指定为 C++11 版本
+set(CMAKE_CXX_STANDARD 11)
+message(STATUS "是否加载了C++编译器? ${CMAKE_CXX_COMPILER_LOADED}")
+if(CMAKE_CXX_COMPILER_LOADED)
+    message(STATUS "C++ 编译器 ID 是: ${CMAKE_CXX_COMPILER_ID}")
+    message(STATUS "C++ 是来自 GNU 吗?: ${CMAKE_COMPILER_IS_GNUCXX}")
+    message(STATUS "C++ 编译器版本是: ${CMAKE_CXX_COMPILER_VERSION}")
+endif()
+
+# 设置默认编译版本
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+message(STATUS "编译版本: ${CMAKE_BUILD_TYPE}")
+
+message(STATUS "C++ flags, compiler flags: ${CMAKE_CXX_FLAGS}")
+message(STATUS "C++ flags, Debug configuration: ${CMAKE_CXX_FLAGS_DEBUG}")
+message(STATUS "C++ flags, Release configuration: ${CMAKE_CXX_FLAGS_RELEASE}")
+message(STATUS "C++ flags, Release configuration with Debug info: ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
+message(STATUS "C++ flags, minimal Release configuration: ${CMAKE_CXX_FLAGS_MINSIZEREL}")
+
+# 定义工程根目录; CMAKE_SOURCE_DIR为内建变量，表示工程根目录的CMakeLists.txt文件路径
+SET(ROOT_DIR ${CMAKE_SOURCE_DIR})
+# 指定头文件搜索路径
+INCLUDE_DIRECTORIES(${ROOT_DIR}/3rdparty)
+# 指定引用的外部库的搜索路径
+# LINK_DIRECTORIES(${ROOT_DIR}/3rdlib)
+# 指定可执行文件存放目录
+# SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+
+# 引入第三方库
+find_package(RapidJSON)
+
+# 是否使用库
+set(USE_LIBRARY ON)
+# message(STATUS "Compile sources into a library? ${USE_LIBRARY}")
+
+# 是否使用动态库
+set(BUILD_SHARED_LIBS ON)
+
+list(APPEND _sources
+    Message.hpp
+    Message.cpp
+    Student.hpp
+    Student.cpp
+)
+
+list(APPEND chapter_01_recipe_09
+    Factory.hpp
+    Animal.hpp
+    Animal.cpp
+    Cat.hpp
+    Cat.cpp
+    Dog.hpp
+    Dog.cpp
+    animal-farm.hpp
+)
+
+list(APPEND ipaddress
+    IpAddress.hpp
+    IpAddress.cpp
+)
+
+include(CMakeDependentOption)
+cmake_dependent_option(
+    MAKE_STATIC_LIBRARY "编译源码为静态库" ON "USE_LIBRARY" OFF
+)
+cmake_dependent_option(
+    MAKE_SHARED_LIBRARY "编译源码为动态库" ON "BUILD_SHARED_LIBS" OFF
+)
+#message(STATUS "Compile sources into a STATIC library? ${MAKE_STATIC_LIBRARY}")
+#message(STATUS "Compile sources into a SHARED library? ${MAKE_SHARED_LIBRARY}")
+if (MAKE_STATIC_LIBRARY)
+    # 从源代码生成对象库
+    #1 add_library(message-objs OBJECT ${_sources})
+
+    if (MAKE_SHARED_LIBRARY)
+        #1 add_library(message-shared SHARED $<TARGET_OBJECTS:message-objs>)
+        add_library(self_library SHARED ${_sources})
+        add_library(chapter_01_recipe_09 SHARED ${chapter_01_recipe_09})
+        add_library(ipaddress SHARED ${ipaddress})
+        #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
+    else()
+        #1 add_library(message-shared ${_sources})
+        add_library(self_library STATIC ${_sources})
+        add_library(chapter_01_recipe_09 ${chapter_01_recipe_09})
+        add_library(ipaddress STATIC ${ipaddress})
+        #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
+    endif()
+
+    add_executable(main main.cpp)
+    target_link_libraries(main self_library)
+    target_link_libraries(main chapter_01_recipe_09)
+    target_link_libraries(main ipaddress)
+else()
+    add_executable(main main.cpp ${_sources} {chapter_01_recipe_09} ${ipaddress})
+endif()
