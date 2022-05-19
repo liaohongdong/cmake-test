@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/Users/hongdong.liao/Desktop/test/build",
+  "command": "/usr/bin/clang++ -I/Users/hongdong.liao/Desktop/test/3rdparty -I/usr/local/opt/openssl@3/include -I/usr/local/include -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -std=gnu++11 -o CMakeFiles/ipaddress.dir/IpAddress.cpp.o -c /Users/hongdong.liao/Desktop/test/IpAddress.cpp",
+  "file": "/Users/hongdong.liao/Desktop/test/IpAddress.cpp"
+},
+{
+  "directory": "/Users/hongdong.liao/Desktop/test/build",
+  "command": "/usr/bin/clang++ -I/Users/hongdong.liao/Desktop/test/3rdparty -I/usr/local/include -isystem /usr/local/opt/openssl@3/include -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -std=gnu++11 -o CMakeFiles/main.dir/main.cpp.o -c /Users/hongdong.liao/Desktop/test/main.cpp",
+  "file": "/Users/hongdong.liao/Desktop/test/main.cpp"
+}
+]

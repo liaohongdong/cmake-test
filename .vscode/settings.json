@@ -68,6 +68,20 @@
         "compare": "cpp",
         "deque": "cpp",
         "map": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "concepts": "cpp",
+        "variant": "cpp",
+        "any": "cpp",
+        "codecvt": "cpp",
+        "condition_variable": "cpp",
+        "csignal": "cpp",
+        "future": "cpp",
+        "iomanip": "cpp",
+        "set": "cpp",
+        "thread": "cpp",
+        "typeindex": "cpp",
+        "*.ipp": "cpp",
+        "stack": "cpp",
+        "valarray": "cpp"
     }
 }

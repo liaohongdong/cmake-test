@@ -9,7 +9,10 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${command:cmake.launchTargetPath}",
-            "args": [],
+            "args": [
+                "-I/usr/local/opt/openssl/include",
+                "-L/usr/local/opt/openssl/lib",
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [
