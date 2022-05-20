@@ -2,7 +2,7 @@
  * @Author: hongdong.liao
  * @Date: 2022-04-26 09:40:58
  * @LastEditors: hongdong.liao
- * @LastEditTime: 2022-05-19 18:06:19
+ * @LastEditTime: 2022-05-20 14:38:50
  * @FilePath: /test/IpAddress.hpp
  */
 #include <arpa/inet.h>
@@ -29,6 +29,7 @@
 #include <boost/asio/ssl/stream.hpp>
 #include <boost/regex.hpp>
 #include <cstdlib>
+
 
 namespace beast = boost::beast;     // from <boost/beast.hpp>
 namespace http = beast::http;       // from <boost/beast/http.hpp>
@@ -59,4 +60,7 @@ public:
 
     // 提取 json
     std::string getJsonByDom();
+
+    // 获取ip
+    std::string getInternetIp();
 };

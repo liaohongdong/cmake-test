@@ -2,10 +2,15 @@
  * @Author: hongdong.liao
  * @Date: 2022-04-26 09:46:52
  * @LastEditors: hongdong.liao
- * @LastEditTime: 2022-05-19 18:07:18
+ * @LastEditTime: 2022-05-20 15:03:51
  * @FilePath: /test/IpAddress.cpp
  */
 #include "IpAddress.hpp"
+
+#include <boost/json/src.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/foreach.hpp>
 
 std::string IpAddress::getIpBySystem() {
     struct ifaddrs* ptr_ifaddrs = nullptr;
@@ -152,10 +157,10 @@ std::string IpAddress::getIpByWeb() {
         beast::flat_buffer buffer;
         http::response<http::dynamic_body> res;
         http::read(stream, buffer, res);
-        std::cout << "==============" << std::endl;
+        // std::cout << "==============" << std::endl;
         // std::cout << res << std::endl;
         this->setDom(res);
-        std::cout << "==============" << std::endl;
+        // std::cout << "==============" << std::endl;
         beast::error_code ec;
         stream.shutdown(ec);
         if(ec == net::error::eof)
@@ -197,5 +202,36 @@ bool IpAddress::checkIpIsIntranet(const std::string ip) {
 };
 
 std::string IpAddress::getJsonByDom() {
-    std::cout << "获取 dom:" << this->getDom() << std::endl;
+    // std::cout << "获取 dom:" << this->getDom() << std::endl;
+    // boost::regex e("(.*)bar|(.*)bah");
+    this->getIpByWeb();
+    boost::regex e("({.*})");
+    std::string text = boost::beast::buffers_to_string(this->getDom().body().data());
+    boost::smatch what;
+    // std::cout << "Expression:  \"" << e << "\"\n";
+    // std::cout << "Text:        \"" << text << "\"\n";
+    if(boost::regex_match(text, what, e))
+    {
+        return what[0];
+    }
+    return "";
+}
+
+std::string IpAddress::getInternetIp() {
+    // 把字符串转成 json
+    std::string jsonStr = this->getJsonByDom();
+    std::stringstream stream(jsonStr);
+    boost::property_tree::ptree strTree;
+    try {
+        boost::property_tree::read_json(stream, strTree);
+    } catch (std::exception const & e) {
+        std::cerr << "Exception read: " << e.what() << std::endl;
+    }
+    try {
+        std::string ip = strTree.get<std::string>("ip_addr");
+        return ip;
+    } catch (std::exception const & e) {
+        std::cerr << "Exception get: " << e.what() << std::endl;
+    }
+    return "";
 }
