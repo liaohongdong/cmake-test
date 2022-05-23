@@ -2,13 +2,12 @@
  * @Author: hongdong.liao
  * @Date: 2022-04-21 15:52:21
  * @LastEditors: hongdong.liao
- * @LastEditTime: 2022-04-21 15:52:23
- * @FilePath: /test/Cat copy.hpp
+ * @LastEditTime: 2022-05-20 17:02:12
+ * @FilePath: /test/Cat.cpp
  */
-/*
- * @Author: hongdong.liao
- * @Date: 2022-04-21 15:52:19
- * @LastEditors: hongdong.liao
- * @LastEditTime: 2022-04-21 15:52:20
- * @FilePath: /test/Cat.hpp
- */
+#include "Cat.hpp"
+
+std::string Cat::name_impl() const
+{
+    return "Cat " + name_;
+}

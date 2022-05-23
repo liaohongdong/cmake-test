@@ -85,16 +85,35 @@ if (MAKE_STATIC_LIBRARY)
         add_library(self_library SHARED ${_sources})
         add_library(chapter_01_recipe_09 SHARED ${chapter_01_recipe_09})
         #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
+        # set_target_properties(chapter_01_recipe_09
+        #     PROPERTIES
+        #     CXX_STANDARD 14
+        #     CXX_EXTENSIONS OFF
+        #     CXX_STANDARD_REQUIRED ON
+        #     POSITION_INDEPENDENT_CODE 1)
     else()
         #1 add_library(message-shared ${_sources})
         add_library(self_library STATIC ${_sources})
-        add_library(chapter_01_recipe_09 ${chapter_01_recipe_09})
+        add_library(chapter_01_recipe_09 STATIC ${chapter_01_recipe_09})
         #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
+        # set_target_properties(chapter_01_recipe_09
+        #     PROPERTIES
+        #     CXX_STANDARD 14
+        #     CXX_EXTENSIONS OFF
+        #     CXX_STANDARD_REQUIRED ON
+        #     POSITION_INDEPENDENT_CODE 1)
     endif()
 
     add_executable(main main.cpp)
     target_link_libraries(main self_library)
     target_link_libraries(main chapter_01_recipe_09)
+
+    set_target_properties(main
+        PROPERTIES
+            CXX_STANDARD 14
+            CXX_EXTENSIONS OFF
+            CXX_STANDARD_REQUIRED ON
+        )
 else()
     add_executable(main main.cpp ${_sources} {chapter_01_recipe_09})
 endif()
