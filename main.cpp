@@ -2,7 +2,7 @@
  * @Author: hongdong.liao
  * @Date: 2022-03-21 10:51:51
  * @LastEditors: hongdong.liao
- * @LastEditTime: 2022-05-23 09:49:27
+ * @LastEditTime: 2022-05-25 09:42:08
  * @FilePath: /test/main.cpp
  */
 #include "Message.hpp"
@@ -10,8 +10,6 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <functional>
-#include <memory>
 
 #include "Animal.hpp"
 #include "Cat.hpp"

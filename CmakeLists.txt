@@ -10,7 +10,7 @@ get_property(name GLOBAL PROPERTY project_name)
 project(${name} LANGUAGES CXX)
 
 # 指定为 C++11 版本
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 message(STATUS "是否加载了C++编译器? ${CMAKE_CXX_COMPILER_LOADED}")
 if(CMAKE_CXX_COMPILER_LOADED)
     message(STATUS "C++ 编译器 ID 是: ${CMAKE_CXX_COMPILER_ID}")
@@ -43,11 +43,11 @@ INCLUDE_DIRECTORIES(${ROOT_DIR}/3rdparty)
 find_package(RapidJSON)
 
 # 是否使用库
-set(USE_LIBRARY ON)
+# set(USE_LIBRARY ON)
 # message(STATUS "Compile sources into a library? ${USE_LIBRARY}")
 
 # 是否使用动态库
-set(BUILD_SHARED_LIBS ON)
+# set(BUILD_SHARED_LIBS ON)
 
 list(APPEND _sources
     Message.hpp
@@ -64,22 +64,27 @@ list(APPEND chapter_01_recipe_09
     Cat.cpp
     Dog.hpp
     Dog.cpp
-    animal-farm.hpp
 )
+
+option(USE_LIBRARY_LIBS "use static lib" OFF)
+option(USE_SHARED_LIBS "use shared lib" OFF)
+message(STATUS "1xxxxxxxxxxxxxx ----- ${USE_LIBRARY_LIBS}")
+message(STATUS "2xxxxx2 ----- ${USE_SHARED_LIBS}")
 
 include(CMakeDependentOption)
 cmake_dependent_option(
-    MAKE_STATIC_LIBRARY "编译源码为静态库" ON "USE_LIBRARY" OFF
+    MAKE_STATIC_LIBRARY "编译源码为静态库" ON "USE_LIBRARY_LIBS" OFF
 )
 cmake_dependent_option(
-    MAKE_SHARED_LIBRARY "编译源码为动态库" ON "BUILD_SHARED_LIBS" OFF
+    MAKE_SHARED_LIBRARY "编译源码为动态库" ON "USE_SHARED_LIBS" OFF
 )
+message(STATUS "xxxxx1 ----- ${MAKE_STATIC_LIBRARY}")
+message(STATUS "xxxxx2 ----- ${MAKE_SHARED_LIBRARY}")
 #message(STATUS "Compile sources into a STATIC library? ${MAKE_STATIC_LIBRARY}")
 #message(STATUS "Compile sources into a SHARED library? ${MAKE_SHARED_LIBRARY}")
 if (MAKE_STATIC_LIBRARY)
     # 从源代码生成对象库
     #1 add_library(message-objs OBJECT ${_sources})
-
     if (MAKE_SHARED_LIBRARY)
         #1 add_library(message-shared SHARED $<TARGET_OBJECTS:message-objs>)
         add_library(self_library SHARED ${_sources})
@@ -108,12 +113,12 @@ if (MAKE_STATIC_LIBRARY)
     target_link_libraries(main self_library)
     target_link_libraries(main chapter_01_recipe_09)
 
-    set_target_properties(main
-        PROPERTIES
-            CXX_STANDARD 14
-            CXX_EXTENSIONS OFF
-            CXX_STANDARD_REQUIRED ON
-        )
+    # set_target_properties(main
+    #     PROPERTIES
+    #         CXX_STANDARD 14
+    #         CXX_EXTENSIONS OFF
+    #         CXX_STANDARD_REQUIRED ON
+    #     )
 else()
-    add_executable(main main.cpp ${_sources} {chapter_01_recipe_09})
+    add_executable(main main.cpp ${_sources} ${chapter_01_recipe_09})
 endif()
