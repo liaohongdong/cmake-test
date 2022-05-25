@@ -56,12 +56,15 @@ list(APPEND _sources
     Student.cpp
 )
 
+option(USE_LIBRARY_LIBS "use static lib" OFF)
+option(USE_SHARED_LIBS "use shared lib" OFF)
+
 include(CMakeDependentOption)
 cmake_dependent_option(
-    MAKE_STATIC_LIBRARY "编译源码为静态库" ON "USE_LIBRARY" OFF
+    MAKE_STATIC_LIBRARY "编译源码为静态库" ON "USE_LIBRARY_LIBS" OFF
 )
 cmake_dependent_option(
-    MAKE_SHARED_LIBRARY "编译源码为动态库" ON "BUILD_SHARED_LIBS" OFF
+    MAKE_SHARED_LIBRARY "编译源码为动态库" ON "USE_SHARED_LIBS" OFF
 )
 #message(STATUS "Compile sources into a STATIC library? ${MAKE_STATIC_LIBRARY}")
 #message(STATUS "Compile sources into a SHARED library? ${MAKE_SHARED_LIBRARY}")
