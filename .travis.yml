@@ -1,0 +1,14 @@
+language: cpp
+sudo: false
+os: osx
+dist: bionic
+arch: amd64
+env:
+  global:
+  - Hello="hello"
+compiler:
+- clang
+branches:
+  only:
+    - master
+script: cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++ -B build -DCMAKE_BUILD_TYPE=Release -DUSE_LIBRARY_LIBS=ON -DUSE_SHARED_LIBS=OFF && cmake --build build --parallel 4
