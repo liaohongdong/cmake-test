@@ -11,36 +11,20 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Display the path by pwsh
-        run: echo ${env:PATH}
-        shell: pwsh
-      - name: Display github.workspace by pwsh
-        run: |
-          echo "github.workspace is ${{ github.workspace }}."
-          ls ${{ github.workspace }}
-        shell: pwsh
+      # - name: Display the path by pwsh
+      #   run: echo ${env:PATH}
+      #   shell: pwsh
+      # - name: Display github.workspace by pwsh
+      #   run: |
+      #     echo "github.workspace is ${{ github.workspace }}."
+      #     ls ${{ github.workspace }}
+      #   shell: pwsh
       - name: CMake Builds
         run: |
           cd ${{ github.workspace }}
-          ls
-      #     mkdir build
-      #     cmake --version
-      #     cmake -DCMAKE_INSTALL_PREFIX=${{ github.workspace }} ../
-      #     ls
+          cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++ -B build -DCMAKE_BUILD_TYPE=Release -DUSE_LIBRARY_LIBS=ON -DUSE_SHARED_LIBS=OFF
+          cmake --build build --parallel 4
         shell: pwsh
-      # - name: CMake Install
-      #   env:
-      #     prefix: ${{ github.workspace }}
-      #   run: |
-      #     cd ${{ github.workspace }}/build
-      #     ls
-      #     make -j 4
-      #     make install
-      #     ls "${{env.prefix}}"
-      #     cd "${{env.prefix}}/bin"
-      #     ls
-      #     ./main
-      #   shell: pwsh
 
   # build:
   #   runs-on: macos-latest
