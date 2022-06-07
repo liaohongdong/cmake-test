@@ -10,19 +10,41 @@ jobs:
   compile:
     runs-on: macos-latest
     steps:
-      - uses: shaowenchen/debugger-action@v2
-        name: debugger
-        timeout-minutes: 300
-        continue-on-error: true
-        with:
-          frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
-          frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
-          frp_token: ${{ secrets.FRP_TOKEN }}
-          ssh_port: 29004
+      - uses: actions/checkout@v2
+      - name: Display the path by pwsh
+        run: echo ${env:PATH}
+        shell: pwsh
+      # - name: Display github.workspace by pwsh
+      #   run: |
+      #     echo "github.workspace is ${{ github.workspace }}."
+      #     ls ${{ github.workspace }}
+      #   shell: pwsh
+      # - name: CMake Builds
+      #   run: |
+      #     cd ${{ github.workspace }}
+      #     ls
+      #     mkdir build
+      #     cmake --version
+      #     cmake -DCMAKE_INSTALL_PREFIX=${{ github.workspace }} ../
+      #     ls
+      #   shell: pwsh
+      # - name: CMake Install
+      #   env:
+      #     prefix: ${{ github.workspace }}
+      #   run: |
+      #     cd ${{ github.workspace }}/build
+      #     ls
+      #     make -j 4
+      #     make install
+      #     ls "${{env.prefix}}"
+      #     cd "${{env.prefix}}/bin"
+      #     ls
+      #     ./main
+      #   shell: pwsh
 
-  build:
-    runs-on: macos-latest
-    needs: compile
-    steps:
-    - name: 打包
-      run: cmake --build build --parallel 4
+  # build:
+  #   runs-on: macos-latest
+  #   needs: compile
+  #   steps:
+  #   - name: 打包
+  #     run: cmake --build build --parallel 4
