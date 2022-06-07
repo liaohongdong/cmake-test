@@ -10,9 +10,17 @@ jobs:
   compile:
     runs-on: macos-latest
     steps:
-    - name: 编译
-      run: |
-            echo "$(ls)"
+    - uses: shaowenchen/debugger-action@v2
+    - name: debugger
+      timeout-minutes: 30
+      continue-on-error: true
+      with:
+        ngrok_token: ${{ secrets.NGROK_TOKEN }}
+    # runs-on: macos-latest
+    # steps:
+    # - uses: shaowenchen/debugger-action@v2
+    # - name: 编译
+    #   run: cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++ -B build -DCMAKE_BUILD_TYPE=Release -DUSE_LIBRARY_LIBS=ON  -DUSE_SHARED_LIBS=OFF
 
   build:
     runs-on: macos-latest
