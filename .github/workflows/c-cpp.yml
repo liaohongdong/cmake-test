@@ -7,17 +7,15 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  compile:
     runs-on: macos-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    - name: 编译
+      run: cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++ -B build -DCMAKE_BUILD_TYPE=Release -DUSE_LIBRARY_LIBS=ON  -DUSE_SHARED_LIBS=OFF
+
+  build:
+    runs-on: macos-latest
+    needs: compile
+    steps:
+    - name: 打包
+      run: cmake --build build --parallel 4
