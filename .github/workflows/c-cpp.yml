@@ -14,11 +14,11 @@ jobs:
       - name: Display the path by pwsh
         run: echo ${env:PATH}
         shell: pwsh
-      # - name: Display github.workspace by pwsh
-      #   run: |
-      #     echo "github.workspace is ${{ github.workspace }}."
-      #     ls ${{ github.workspace }}
-      #   shell: pwsh
+      - name: Display github.workspace by pwsh
+        run: |
+          echo "github.workspace is ${{ github.workspace }}."
+          ls ${{ github.workspace }}
+        shell: pwsh
       # - name: CMake Builds
       #   run: |
       #     cd ${{ github.workspace }}
