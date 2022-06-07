@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-latest
     steps:
     - name: 编译
-      run: cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++ -B build -DCMAKE_BUILD_TYPE=Release -DUSE_LIBRARY_LIBS=ON  -DUSE_SHARED_LIBS=OFF
+      run: ls
 
   build:
     runs-on: macos-latest
