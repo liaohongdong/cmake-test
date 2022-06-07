@@ -12,9 +12,7 @@ jobs:
     steps:
     - name: 编译
       run: |
-            echo "::group::My title"
-            echo "Inside group"
-            echo "::endgroup::"
+            echo "$(ls)"
 
   build:
     runs-on: macos-latest
