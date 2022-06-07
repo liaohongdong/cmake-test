@@ -22,7 +22,13 @@ jobs:
       - name: CMake Builds
         run: |
           cd ${{ github.workspace }}
-          cd ../../
+          pwd
+          ls
+          cd ../
+          pwd
+          ls
+          cd ../
+          pwd
           ls
       #     mkdir build
       #     cmake --version
