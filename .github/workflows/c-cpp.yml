@@ -66,8 +66,8 @@ jobs:
         # shell: pwsh
 
       - name: Wait / Sleep
-        # uses: GuillaumeFalourd/wait-sleep-action@v1
-        uses: whatnick/wait-action@master
+        uses: GuillaumeFalourd/wait-sleep-action@v1
+        # uses: whatnick/wait-action@master
         with:
           time: '6h'
 
