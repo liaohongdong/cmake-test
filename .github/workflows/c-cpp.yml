@@ -66,7 +66,7 @@ jobs:
         # shell: pwsh
 
       - name: Wait / Sleep
-        uses: jakejarvis/wait-action@v0.1.1
+        uses: GuillaumeFalourd/wait-sleep-action@v1
         with:
           time: '6h'
 
