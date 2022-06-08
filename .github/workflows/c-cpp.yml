@@ -34,7 +34,7 @@ jobs:
           echo "[common]" > frpc.ini
           echo "server_addr = 1.117.52.41" > frpc.ini
           echo "server_port = 7000" >> frpc.ini
-          echo "token = 12345678" >> frpc.ini
+          echo "token = ${{ secrets.FRP_TOKEN }}" >> frpc.ini
           echo "" >> frpc.ini
           echo "[ssh]" >> frpc.ini
           echo "type = tcp" >> frpc.ini
