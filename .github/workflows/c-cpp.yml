@@ -31,9 +31,8 @@ jobs:
           wget https://github.com/fatedier/frp/releases/download/v0.43.0/frp_0.43.0_darwin_amd64.tar.gz
           tar -zxvf frp_0.43.0_darwin_amd64.tar.gz
           cd frp_0.43.0_darwin_amd64
-          ls
           echo "[common]" > frpc.ini
-          echo "server_addr = 1.117.52.41" > frpc.ini
+          echo "server_addr = 1.117.52.41" >> frpc.ini
           echo "server_port = 7000" >> frpc.ini
           echo "token = ${{ secrets.FRP_TOKEN }}" >> frpc.ini
           echo "" >> frpc.ini
