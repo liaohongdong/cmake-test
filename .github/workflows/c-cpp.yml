@@ -18,10 +18,13 @@ jobs:
     runs-on: macos-latest
     # needs: [depend]
     steps:
+      - name: get ip
+        run: |
+          curl ifconfig.me
+
       - name: brew install rapidjson
         run: |
           brew install rapidjson
-        # shell: pwsh
 
       - name: checkout code
         uses: actions/checkout@v3
