@@ -7,8 +7,16 @@ on:
     branches: [ master ]
 
 jobs:
+  depend:
+    runs-on: macos-latest
+    steps:
+      - name: brew install rapidjson
+        run: |
+          brew install rapidjson
+
   compile:
     runs-on: macos-latest
+    needs: [depend]
     steps:
       - uses: actions/checkout@v3
       # - name: Display the path by pwsh
@@ -24,6 +32,7 @@ jobs:
           cd ${{ github.workspace }}
           cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++ -B build -DCMAKE_BUILD_TYPE=Release -DUSE_LIBRARY_LIBS=ON -DUSE_SHARED_LIBS=OFF
           cmake --build build --parallel 4
+          cd build && ./main 1 2 3 4
         shell: pwsh
 
   # build:
