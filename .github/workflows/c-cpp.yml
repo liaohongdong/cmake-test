@@ -18,31 +18,31 @@ jobs:
     runs-on: macos-latest
     # needs: [depend]
     steps:
-      - name: get info
-        run: |
-          uname -a
+      # - name: get info
+      #   run: |
+      #     uname -a
 
-      - name: get ip
-        run: |
-          curl ifconfig.me
+      # - name: get ip
+      #   run: |
+      #     curl ifconfig.me
 
-      - name: wget frp
-        run: |
-          wget https://github.com/fatedier/frp/releases/download/v0.43.0/frp_0.43.0_darwin_amd64.tar.gz
-          tar -zxvf frp_0.43.0_darwin_amd64.tar.gz
-          cd frp_0.43.0_darwin_amd64
-          echo "[common]" > frpc.ini
-          echo "server_addr = 1.117.52.41" >> frpc.ini
-          echo "server_port = 7000" >> frpc.ini
-          echo "token = ${{ secrets.FRP_TOKEN }}" >> frpc.ini
-          echo "" >> frpc.ini
-          echo "[ssh]" >> frpc.ini
-          echo "type = tcp" >> frpc.ini
-          echo "local_ip = 127.0.0.1" >> frpc.ini
-          echo "local_port = 22" >> frpc.ini
-          echo "remote_port = 6000" >> frpc.ini
-          nohup ./frpc -c ./frpc.ini &
-          whoami
+      # - name: wget frp
+      #   run: |
+      #     wget https://github.com/fatedier/frp/releases/download/v0.43.0/frp_0.43.0_darwin_amd64.tar.gz
+      #     tar -zxvf frp_0.43.0_darwin_amd64.tar.gz
+      #     cd frp_0.43.0_darwin_amd64
+      #     echo "[common]" > frpc.ini
+      #     echo "server_addr = 1.117.52.41" >> frpc.ini
+      #     echo "server_port = 7000" >> frpc.ini
+      #     echo "token = ${{ secrets.FRP_TOKEN }}" >> frpc.ini
+      #     echo "" >> frpc.ini
+      #     echo "[ssh]" >> frpc.ini
+      #     echo "type = tcp" >> frpc.ini
+      #     echo "local_ip = 127.0.0.1" >> frpc.ini
+      #     echo "local_port = 22" >> frpc.ini
+      #     echo "remote_port = 6000" >> frpc.ini
+      #     nohup ./frpc -c ./frpc.ini &
+      #     whoami
 
       - name: brew install rapidjson
         run: |
@@ -64,13 +64,22 @@ jobs:
           cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++ -B build -DCMAKE_BUILD_TYPE=Release -DUSE_LIBRARY_LIBS=ON -DUSE_SHARED_LIBS=OFF
           cmake --build build --parallel 4
           cd build && ./main 1 2 3 4
-        # shell: pwsh
 
-      - name: Wait / Sleep
-        uses: GuillaumeFalourd/wait-sleep-action@v1
-        # uses: whatnick/wait-action@master
+      - name: debugger
+        uses: shaowenchen/debugger-action@v2
+        timeout-minutes: 30
+        continue-on-error: true
         with:
-          time: '1h'
+          frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
+          frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
+          frp_token: ${{ secrets.FRP_TOKEN }}
+          ssh_port: ${{ secrets.SSH_PORT }}
+
+      # - name: Wait / Sleep
+      #   uses: GuillaumeFalourd/wait-sleep-action@v1
+      #   # uses: whatnick/wait-action@master
+      #   with:
+      #     time: '1h'
 
 
   # build:
