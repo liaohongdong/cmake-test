@@ -43,7 +43,16 @@ jobs:
           echo "remote_port = 6000" >> frpc.ini
           nohup ./frpc -c ./frpc.ini &
           pwd
-          cd ~/.ssh
+          cd ../
+          pwd
+          cd ../
+          pwd
+          cd ../
+          pwd
+          cd ../
+          pwd
+          cd ../
+          pwd
           ls
 
       - name: brew install rapidjson
