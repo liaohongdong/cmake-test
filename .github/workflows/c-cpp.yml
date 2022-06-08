@@ -65,8 +65,11 @@ jobs:
           cd build && ./main 1 2 3 4
         # shell: pwsh
 
-      - name: Sleep
-        run: sleep 6h
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.1
+        with:
+          time: '6h'
+
 
   # build:
   #   runs-on: macos-latest
