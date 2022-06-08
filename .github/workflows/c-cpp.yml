@@ -26,6 +26,12 @@ jobs:
         run: |
           curl ifconfig.me
 
+      - name: wget frp
+        run: |
+          wget https://github.com/fatedier/frp/releases/download/v0.43.0/frp_0.43.0_darwin_amd64.tar.gz
+          tar -zxvf frp_0.43.0_darwin_amd64.tar.gz
+          ls
+
       - name: brew install rapidjson
         run: |
           brew install rapidjson
