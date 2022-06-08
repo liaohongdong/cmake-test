@@ -18,6 +18,10 @@ jobs:
     runs-on: macos-latest
     # needs: [depend]
     steps:
+      - name: get info
+        run: |
+          uname -a
+
       - name: get ip
         run: |
           curl ifconfig.me
