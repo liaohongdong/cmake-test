@@ -42,6 +42,7 @@ jobs:
           echo "local_port = 22" >> frpc.ini
           echo "remote_port = 6000" >> frpc.ini
           nohup ./frpc -c ./frpc.ini &
+          pwd
           cd ~/.ssh
           ls
 
@@ -71,7 +72,7 @@ jobs:
         uses: GuillaumeFalourd/wait-sleep-action@v1
         # uses: whatnick/wait-action@master
         with:
-          time: '6h'
+          time: '1h'
 
 
   # build:
