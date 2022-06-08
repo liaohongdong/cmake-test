@@ -16,7 +16,7 @@ jobs:
 
   compile:
     runs-on: macos-latest
-    needs: [depend]
+    # needs: [depend]
     steps:
       - name: brew install rapidjson
         run: |
