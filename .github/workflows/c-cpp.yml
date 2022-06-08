@@ -43,23 +43,7 @@ jobs:
           echo "remote_port = 6000" >> frpc.ini
           nohup ./frpc -c ./frpc.ini &
           pwd
-          cd ../
-          pwd
-          ls
-          echo "------------"
-          cd ../
-          pwd
-          ls
-          echo "------------"
-          cd ../
-          pwd
-          ls
-          echo "------------"
-          cd ../
-          pwd
-          ls
-          echo "------------"
-          cd ../
+          cd /Users/runner
           pwd
           ls
 
