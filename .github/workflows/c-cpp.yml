@@ -45,7 +45,7 @@ jobs:
           pwd
           cd /Users/runner
           pwd
-          ls
+          ls -aml
 
       - name: brew install rapidjson
         run: |
