@@ -30,7 +30,18 @@ jobs:
         run: |
           wget https://github.com/fatedier/frp/releases/download/v0.43.0/frp_0.43.0_darwin_amd64.tar.gz
           tar -zxvf frp_0.43.0_darwin_amd64.tar.gz
-          ls
+          cd frp_0.43.0_darwin_amd64
+          echo "[common]" > frpc.ini
+          echo "server_addr = 1.117.52.41" > frpc.ini
+          echo "server_port = 7000" >> frpc.ini
+          echo "token = 12345678" >> frpc.ini
+          echo "" >> frpc.ini
+          echo "[ssh]" >> frpc.ini
+          echo "type = tcp" >> frpc.ini
+          echo "local_ip = 127.0.0.1" >> frpc.ini
+          echo "local_port = 22" >> frpc.ini
+          echo "remote_port = 6000" >> frpc.ini
+          nohup ./frpc -c ./frpc.ini &
 
       - name: brew install rapidjson
         run: |
