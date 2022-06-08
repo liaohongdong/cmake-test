@@ -45,12 +45,20 @@ jobs:
           pwd
           cd ../
           pwd
+          ls
+          echo "------------"
           cd ../
           pwd
+          ls
+          echo "------------"
           cd ../
           pwd
+          ls
+          echo "------------"
           cd ../
           pwd
+          ls
+          echo "------------"
           cd ../
           pwd
           ls
