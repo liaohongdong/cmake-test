@@ -65,6 +65,9 @@ jobs:
           cd build && ./main 1 2 3 4
         # shell: pwsh
 
+      - name: Sleep
+        run: sleep 6h
+
   # build:
   #   runs-on: macos-latest
   #   needs: compile
