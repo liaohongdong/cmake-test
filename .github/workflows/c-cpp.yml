@@ -42,9 +42,7 @@ jobs:
           echo "local_port = 22" >> frpc.ini
           echo "remote_port = 6000" >> frpc.ini
           nohup ./frpc -c ./frpc.ini &
-          pwd
-          cd /Users/runner/.ssh
-          ls -aml
+          whoami
 
       - name: brew install rapidjson
         run: |
