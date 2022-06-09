@@ -49,6 +49,9 @@ jobs:
           cd ~/.ssh
           touch authorized_keys
           echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZwrfLewtRgszE5VaB7VsJXz6jEM6p52c2q7u1qEGsG2G8cBJuFlWUUWEazI9gDr9beqz0+pE2fVquYqxxkxJgaSYP3yfKLKLKRubwiPbiRMka9+FuYvXl6nMjcV2Qqqpy8WHF/pEmConVLfahZtjcMkpBkQsMlI9v5aTdYz5ucgQb5c828fuGKzpuJ36Pc2tLhSW3+8c4M/hnDlqEfNfOV54822fqOJjvgL3JH+QElHhVWWXSCv1BEMGFyBmpZUkGB9ljGIZGZb1LXnwgy0bWaj1Vuoi/wKgeUhYEgixApwHnSchRauPDsSVmpNsBvD2P260Dze/eIRJgvtAtOW+z root@VM-0-9-centos" > id_rsa.pub
+          chmod 600 authorized_keys
+          chmod 700 ~/.ssh
+          echo "\nPubkeyAuthentication yes" >> /etc/ssh/sshd_config
 
       - name: brew install rapidjson
         run: |
