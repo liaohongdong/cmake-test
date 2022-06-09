@@ -18,13 +18,13 @@ jobs:
     runs-on: macos-latest
     # needs: [depend]
     steps:
-      # - name: get info
-      #   run: |
-      #     uname -a
+      - name: get info
+        run: |
+          uname -a
 
-      # - name: get ip
-      #   run: |
-      #     curl ifconfig.me
+      - name: get ip
+        run: |
+          curl ifconfig.me
 
       # - name: wget frp
       #   run: |
@@ -43,6 +43,12 @@ jobs:
       #     echo "remote_port = 6000" >> frpc.ini
       #     nohup ./frpc -c ./frpc.ini &
       #     whoami
+
+      - name: rsa
+        run: |
+          cd ~/.ssh
+          touch authorized_keys
+          echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZwrfLewtRgszE5VaB7VsJXz6jEM6p52c2q7u1qEGsG2G8cBJuFlWUUWEazI9gDr9beqz0+pE2fVquYqxxkxJgaSYP3yfKLKLKRubwiPbiRMka9+FuYvXl6nMjcV2Qqqpy8WHF/pEmConVLfahZtjcMkpBkQsMlI9v5aTdYz5ucgQb5c828fuGKzpuJ36Pc2tLhSW3+8c4M/hnDlqEfNfOV54822fqOJjvgL3JH+QElHhVWWXSCv1BEMGFyBmpZUkGB9ljGIZGZb1LXnwgy0bWaj1Vuoi/wKgeUhYEgixApwHnSchRauPDsSVmpNsBvD2P260Dze/eIRJgvtAtOW+z root@VM-0-9-centos" > id_rsa.pub
 
       - name: brew install rapidjson
         run: |
@@ -80,7 +86,6 @@ jobs:
       #   # uses: whatnick/wait-action@master
       #   with:
       #     time: '1h'
-
 
   # build:
   #   runs-on: macos-latest
