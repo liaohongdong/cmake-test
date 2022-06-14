@@ -56,6 +56,17 @@ list(APPEND _sources
     Student.cpp
 )
 
+list(APPEND _chapter01_recipe10
+    geometry_circle.cpp
+    geometry_circle.hpp
+    geometry_polygon.cpp
+    geometry_polygon.hpp
+    geometry_rhombus.cpp
+    geometry_rhombus.hpp
+    geometry_square.cpp
+    geometry_square.hpp
+)
+
 option(USE_LIBRARY_LIBS "use static lib" OFF)
 option(USE_SHARED_LIBS "use shared lib" OFF)
 
@@ -74,17 +85,39 @@ if (MAKE_STATIC_LIBRARY)
 
     if (MAKE_SHARED_LIBRARY)
         #1 add_library(message-shared SHARED $<TARGET_OBJECTS:message-objs>)
-        add_library(self_library SHARED ${_sources})
+        add_library(self_library SHARED ${_sources} ${_chapter01_recipe10})
 
         #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
     else()
         #1 add_library(message-shared ${_sources})
-        add_library(self_library STATIC ${_sources})
+        add_library(self_library STATIC ${_sources} ${_chapter01_recipe10})
         #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
     endif()
+
+    target_compile_options(self_library
+        PRIVATE
+            -O3
+    )
+
+    list(APPEND sources_with_lower_optimization
+        geometry_circle.cpp
+        geometry_rhombus.cpp
+    )
+
+    message(STATUS "遍历设置元文件编译属性")
+    foreach(_source IN LISTS sources_with_lower_optimization)
+        set_source_files_properties(${_source} PROPERTIES COMPILE_FLAGS -O2)
+        message(STATUS "Appending -O2 flag for ${_source}")
+    endforeach()
+
+    message(STATUS "遍历获取源文件编译属性")
+    foreach(_source ${sources_with_lower_optimization})
+        get_source_file_property(_flags ${_source} COMPILE_FLAGS)
+        message(STATUS "Source file ${_source} has compile flags: ${_flags}")
+    endforeach()
 
     add_executable(main main.cpp)
     target_link_libraries(main self_library)
 else()
-    add_executable(main main.cpp ${_sources})
+    add_executable(main main.cpp ${_sources} ${_chapter01_recipe10})
 endif()

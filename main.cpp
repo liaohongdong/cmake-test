@@ -2,11 +2,17 @@
  * @Author: hongdong.liao
  * @Date: 2022-03-21 10:51:51
  * @LastEditors: hongdong.liao
- * @LastEditTime: 2022-05-20 16:35:07
- * @FilePath: /test/main.cpp
+ * @LastEditTime: 2022-06-14 10:35:15
+ * @FilePath: /cmake-test/main.cpp
  */
 #include "Message.hpp"
 // #include "Student.hpp"
+
+#include "geometry_circle.hpp"
+#include "geometry_polygon.hpp"
+#include "geometry_rhombus.hpp"
+#include "geometry_square.hpp"
+
 
 #include <cstdlib>
 #include <iostream>
@@ -15,6 +21,30 @@ int main(int argc, const char *argv[])
 {
     Message say_hello("Hello, CMake World!");
     std::cout << say_hello << std::endl;
+
+    using namespace geometry;
+
+    double radius = 2.5293;
+    double A_circle = area::circle(radius);
+    std::cout << "A circle of radius " << radius << " has an area of " << A_circle
+            << std::endl;
+
+    double nSides = 19;
+    double side = 1.29312;
+    double A_polygon = area::polygon(nSides, side);
+    std::cout << "A regular polygon of " << nSides << " sides of length " << side
+            << " has an area of " << A_polygon << std::endl;
+
+    double d1 = 5.0;
+    double d2 = 7.8912;
+    double A_rhombus = area::rhombus(d1, d2);
+    std::cout << "A rhombus of major diagonal " << d1 << " and minor diagonal " << d2
+            << " has an area of " << A_rhombus << std::endl;
+
+    double l = 10.0;
+    double A_square = area::square(l);
+    std::cout << "A square of side " << l << " has an area of " << A_square
+            << std::endl;
 
     return EXIT_SUCCESS;
 }
