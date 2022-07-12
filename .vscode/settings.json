@@ -68,6 +68,7 @@
         "compare": "cpp",
         "deque": "cpp",
         "map": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "core": "cpp"
     }
 }
