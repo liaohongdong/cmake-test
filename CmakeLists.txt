@@ -41,6 +41,22 @@ INCLUDE_DIRECTORIES(${ROOT_DIR}/3rdparty)
 
 # 引入第三方库
 find_package(RapidJSON)
+find_package(PythonInterp REQUIRED)
+
+execute_process(
+    COMMAND
+        ${PYTHON_EXECUTABLE} "-c" ""
+    RESULT_VARIABLE _status
+    OUTPUT_VARIABLE _hello_world
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+message(STATUS "RESULT_VARIABLE is: ${_status}")
+message(STATUS "OUTPUT_VARIABLE is: ${_hello_world}")
+
+include(CMakePrintHelpers)
+cmake_print_variables(_status _hello_world)
 
 # 是否使用库
 set(USE_LIBRARY ON)
