@@ -69,5 +69,6 @@
         "deque": "cpp",
         "map": "cpp",
         "regex": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

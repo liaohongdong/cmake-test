@@ -17,6 +17,7 @@ if(CMAKE_CXX_COMPILER_LOADED)
     message(STATUS "C++ 是来自 GNU 吗?: ${CMAKE_COMPILER_IS_GNUCXX}")
     message(STATUS "C++ 编译器版本是: ${CMAKE_CXX_COMPILER_VERSION}")
 endif()
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # 设置默认编译版本
 if(NOT CMAKE_BUILD_TYPE)
@@ -82,9 +83,47 @@ if (MAKE_STATIC_LIBRARY)
         add_library(self_library STATIC ${_sources})
         #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
     endif()
-
-    add_executable(main main.cpp)
-    target_link_libraries(main self_library)
+    add_library(sum_integers sum_integers.cpp)
+    # add_executable(main main.cpp)
+    add_executable(sum_up main.cpp)
+    # target_link_libraries(main self_library)
+    target_link_libraries(sum_up self_library sum_integers)
 else()
     add_executable(main main.cpp ${_sources})
+endif()
+
+option(ENABLE_UNIT_TESTS "Enable unit tests" ON)
+message(STATUS "Enable testing: ${ENABLE_UNIT_TESTS}")
+
+if(ENABLE_UNIT_TESTS)
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG        release-1.12.1
+    )
+    FetchContent_MakeAvailable(googletest)
+    # FetchContent_GetProperties(googletest)
+    # if(NOT googletest_POPULATED)
+    #     FetchContent_Populate(googletest)
+    #     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    #     set(gtest_disable_pthreads ON CACHE BOOL "" FORCE)
+    #     add_subdirectory(
+    #         ${googletest_SOURCE_DIR}
+    #         ${googletest_BINARY_DIR}
+    #     )
+    #     if(MSVC)
+    #         foreach(_tgt gtest gtest_main gmock gmock_main)
+    #             target_compile_definitions(${_tgt}
+    #                 PRIVATE
+    #                     "_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING"
+    #                 )
+    #         endforeach()
+    #     endif()
+    # endif()
+    add_executable(cpp_test "")
+    target_sources(cpp_test PRIVATE test.cpp)
+    target_link_libraries(cpp_test PRIVATE sum_integers gtest_main)
+    enable_testing()
+    add_test(NAME google_test COMMAND $<TARGET_FILE:cpp_test>)
 endif()
