@@ -41,7 +41,8 @@ INCLUDE_DIRECTORIES(${ROOT_DIR}/3rdparty)
 
 # 引入第三方库
 find_package(RapidJSON)
-
+find_package(Boost 1.76 REQUIRED COMPONENTS unit_test_framework)
+include_directories(${Boost_INCLUDE_DIRS})
 # 是否使用库
 set(USE_LIBRARY ON)
 # message(STATUS "Compile sources into a library? ${USE_LIBRARY}")
@@ -82,9 +83,23 @@ if (MAKE_STATIC_LIBRARY)
         add_library(self_library STATIC ${_sources})
         #1 set_target_properties(message-shared PROPERTIES OUTPUT_NAME "message")
     endif()
-
+    add_library(sum_integers sum_integers.cpp)
     add_executable(main main.cpp)
-    target_link_libraries(main self_library)
+    target_link_libraries(main self_library sum_integers)
 else()
     add_executable(main main.cpp ${_sources})
 endif()
+
+add_executable(cpp_test test.cpp)
+target_link_libraries(cpp_test
+    PRIVATE
+        sum_integers
+        Boost::unit_test_framework
+)
+target_compile_definitions(cpp_test
+    PRIVATE
+        BOOST_TEST_DYN_LINK
+)
+
+enable_testing()
+add_test(NAME boost_test COMMAND $<TARGET_FILE:cpp_test>)
