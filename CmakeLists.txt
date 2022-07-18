@@ -41,6 +41,7 @@ INCLUDE_DIRECTORIES(${ROOT_DIR}/3rdparty)
 
 # 引入第三方库
 find_package(RapidJSON)
+find_package(PythonInterp REQUIRED)
 
 # 是否使用库
 set(USE_LIBRARY ON)
@@ -88,3 +89,10 @@ if (MAKE_STATIC_LIBRARY)
 else()
     add_executable(main main.cpp ${_sources})
 endif()
+
+# define tests
+enable_testing()
+add_test(example ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/test.py)
+
+# we expect this test to fail
+set_tests_properties(example PROPERTIES WILL_FAIL true)

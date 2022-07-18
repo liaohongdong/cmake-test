@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /build
-
+build
+Testing
 
 # local env files
 .env.local
